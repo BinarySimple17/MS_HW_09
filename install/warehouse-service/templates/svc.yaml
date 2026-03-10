@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "warehouse-service.fullname" . }}
+  labels:
+    {{- include "warehouse-service.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.port }}
+      name: http
+  selector:
+    {{- include "warehouse-service.selectorLabels" . | nindent 4 }}

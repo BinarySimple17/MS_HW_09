@@ -1,0 +1,365 @@
+PS Z:\Java\otus MicroServ HW 9> newman run .\.postman\HW9.postman_collection.json
+>>
+(node:16616) [DEP0176] DeprecationWarning: fs.F_OK is deprecated, use fs.constants.F_OK instead
+(Use `node --trace-deprecation ...` to show where the warning was created)
+newman
+
+HW9
+
+→ register
+  ┌
+  │ '=== REQUEST DATA ==='
+  │ 'URL:', 'http://arch.homework/api/v1/auth/register'
+  │ 'Method:', 'POST'
+  │ 'Headers:', '{\n  "accept": "*/*",\n  "content-type": "application/json"\n}'
+  │ 'Body:', {
+  │   mode: 'raw',
+  │   raw: '{\n' +
+  │     '  "username": "{{randomUsername}}",\n' +
+  │     '  "email": "{{randomUsername}}@mail.com",\n' +
+  │     '  "phone": "+7987654321",\n' +
+  │     '  "password": "{{userPassword}}",\n' +
+  │     '  "firstName": "Alex4_{{randomUsername}}",\n' +
+  │     '  "lastName": "Ivanov4_{{randomUsername}}",\n' +
+  │     '  "login": true\n' +
+  │     '}',
+  │   options: { raw: { language: 'json' } }
+  │ }
+  │ '\n'
+  └
+  ┌
+  │ 'Прошло 1 секунд, отправляю запрос'
+  │ '=== REGISTER USER_1 ==='
+  └
+  POST http://arch.homework/api/v1/auth/register [201 Created, 641B, 240ms]
+  ┌
+  │ '=== RESPONSE DATA ==='
+  │ 'Status:', 201, 'Created'
+  │ 'Response Time:', 240, 'ms'
+  │ 'Response Headers:', '{\n' +
+  │   '  "date": "Tue, 10 Mar 2026 14:19:54 GMT",\n' +
+  │   '  "content-type": "application/json",\n' +
+  │   '  "transfer-encoding": "chunked",\n' +
+  │   '  "connection": "keep-alive",\n' +
+  │   '  "x-content-type-options": "nosniff",\n' +
+  │   '  "x-xss-protection": "0",\n' +
+  │   '  "cache-control": "no-cache, no-store, max-age=0, must-revalidate",\n' +
+  │   '  "pragma": "no-cache",\n' +
+  │   '  "expires": "0",\n' +
+  │   '  "x-frame-options": "DENY"\n' +
+  │   '}'
+  │ 'Response Body (json):', '{\n' +
+  │   '  "accessToken": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c3I4ODciLCJpYXQiOjE3NzMxNTIzOTQsImV4cCI6MTc3MzE1NTk5NCw
+  │ icm9sZXMiOlsiVVNFUiJdfQ.qHJI9y2F-w1JIh08MCtgGzCRkCT-h_2KxBto2p1p2Cx7OrdVfJz88HlszqIZ6U4A",\n' +
+  │   '  "refreshToken": "13a13a21-f6f3-436e-a4ad-6c96c72a8b41",\n' +
+  │   '  "tokenType": "Bearer",\n' +
+  │   '  "userInfo": {\n' +
+  │   '    "id": 6,\n' +
+  │   '    "username": "usr887",\n' +
+  │   '    "roles": [\n' +
+  │   '      "USER"\n' +
+  │   '    ]\n' +
+  │   '  }\n' +
+  │   '}'
+  └
+  √  Статус 201 OK
+
+→ deposit money
+  ┌
+  │ '=== REQUEST DATA ==='
+  │ 'URL:', 'http://arch.homework/api/v1/billing/account/operate'
+  │ 'Method:', 'POST'
+  │ 'Headers:', '{\n  "accept": "*/*",\n  "x-username": "{{randomUsername}}",\n  "content-typ
+  │ e": "application/json"\n}'
+  │ 'Body:', {
+  │   mode: 'raw',
+  │   raw: '{\n' +
+  │     '  "type": "DEPOSIT",\n' +
+  │     '  "amount": {{depositAmount}},\n' +
+  │     '  "account": {\n' +
+  │     '    "username": "{{randomUsername}}"\n' +
+  │     '  }\n' +
+  │     '}',
+  │   options: { raw: { language: 'json' } }
+  │ }
+  │ '\n'
+  └
+  ┌
+  │ 'Прошло 1 секунд, отправляю запрос'
+  └
+  POST http://arch.homework/api/v1/billing/account/operate [200 OK, 408B, 27ms]
+  ┌
+  │ '=== RESPONSE DATA ==='
+  │ 'Status:', 200, 'OK'
+  │ 'Response Time:', 27, 'ms'
+  │ 'Response Headers:', '{\n' +
+  │   '  "date": "Tue, 10 Mar 2026 14:19:55 GMT",\n' +
+  │   '  "content-type": "application/json",\n' +
+  │   '  "transfer-encoding": "chunked",\n' +
+  │   '  "connection": "keep-alive",\n' +
+  │   '  "x-content-type-options": "nosniff",\n' +
+  │   '  "x-xss-protection": "0",\n' +
+  │   '  "cache-control": "no-cache, no-store, max-age=0, must-revalidate",\n' +
+  │   '  "pragma": "no-cache",\n' +
+  │   '  "expires": "0",\n' +
+  │   '  "x-frame-options": "DENY"\n' +
+  │   '}'
+  │ 'Response Body (json):', '{\n' +
+  │   '  "id": 13,\n' +
+  │   '  "createdAt": "2026-03-10T14:19:55.176256955",\n' +
+  │   '  "type": "DEPOSIT",\n' +
+  │   '  "amount": 150,\n' +
+  │   '  "orderId": null\n' +
+  │   '}'
+  │ 'depositAmount=:', 150
+  └
+  √  Баланс пополнен. Статус 200 OK
+
+→ get balance Copy
+  ┌
+  │ '=== REQUEST DATA ==='
+  │ 'URL:', 'http://arch.homework/api/v1/billing/account/balance'
+  │ 'Method:', 'GET'
+  │ 'Headers:', '{\n  "accept": "*/*",\n  "x-username": "{{randomUsername}}",\n  "content-typ
+  │ e": "application/json"\n}'
+  │ '\n'
+  └
+  ┌
+  │ 'Прошло 1 секунд, отправляю запрос'
+  └
+  GET http://arch.homework/api/v1/billing/account/balance [200 OK, 355B, 20ms]
+  ┌
+  │ '=== RESPONSE DATA ==='
+  │ 'Status:', 200, 'OK'
+  │ 'Response Time:', 20, 'ms'
+  │ 'Response Headers:', '{\n' +
+  │   '  "date": "Tue, 10 Mar 2026 14:19:56 GMT",\n' +
+  │   '  "content-type": "application/json",\n' +
+  │   '  "transfer-encoding": "chunked",\n' +
+  │   '  "connection": "keep-alive",\n' +
+  │   '  "x-content-type-options": "nosniff",\n' +
+  │   '  "x-xss-protection": "0",\n' +
+  │   '  "cache-control": "no-cache, no-store, max-age=0, must-revalidate",\n' +
+  │   '  "pragma": "no-cache",\n' +
+  │   '  "expires": "0",\n' +
+  │   '  "x-frame-options": "DENY"\n' +
+  │   '}'
+  │ 'Response Body (json):', '{\n  "id": 6,\n  "username": "usr887",\n  "balance": 150\n}'
+  │ 9m
+  └
+  √  Статус 200 OK
+
+→ order_create ok
+  ┌
+  │ '=== REQUEST DATA ==='
+  │ 'URL:', 'http://arch.homework/api/v1/order'
+  │ 'Method:', 'POST'
+  │ 'Headers:', '{\n' +
+  │   '  "accept": "*/*",\n' +
+  │   '  "content-type": "application/json",\n' +
+  │   '  "idempotency-key": "{{idempotencyKey}}"\n' +
+  │   '}'
+  │ 'Body:', {
+  │   mode: 'raw',
+  │   raw: '{\n' +
+  │     '  "username": "{{randomUsername}}",\n' +
+  │     '  "totalCost": 0.1,\n' +
+  │     '  "createdAt": "2026-02-17T12:00:00.000Z",\n' +
+  │     '  "shopId": 1,\n' +
+  │     '  "status": "NEW",\n' +
+  │     '  "orderPositions": [\n' +
+  │     '    {\n' +
+  │     '      "productId": 2,\n' +
+  │     '      "price": 30,\n' +
+  │     '      "quantity": 1\n' +
+  │     '    },\n' +
+  │     '    {\n' +
+  │     '      "productId": 3,\n' +
+  │     '      "price": 70,\n' +
+  │     '      "quantity": 1\n' +
+  │     '    }    \n' +
+  │     '  ]\n' +
+  │     '}',
+  │   options: { raw: { language: 'json' } }
+  │ }
+  │ '\n'
+  └
+  ┌
+  │ 'Прошло 1 секунд, отправляю запрос'
+  └
+  POST http://arch.homework/api/v1/order [200 OK, 538B, 56ms]
+  ┌
+  │ '=== RESPONSE DATA ==='
+  │ 'Status:', 200, 'OK'
+  │ 'Response Time:', 56, 'ms'
+  │ 'Response Headers:', '{\n' +
+  │   '  "date": "Tue, 10 Mar 2026 14:19:57 GMT",\n' +
+  │   '  "content-type": "application/json",\n' +
+  │   '  "transfer-encoding": "chunked",\n' +
+  │   '  "connection": "keep-alive",\n' +
+  │   '  "x-content-type-options": "nosniff",\n' +
+  │   '  "x-xss-protection": "0",\n' +
+  │   '  "cache-control": "no-cache, no-store, max-age=0, must-revalidate",\n' +
+  │   '  "pragma": "no-cache",\n' +
+  │   '  "expires": "0",\n' +
+  │   '  "x-frame-options": "DENY"\n' +
+  │   '}'
+  │ 'Response Body (json):', '{\n' +
+  │   '  "id": 7,\n' +
+  │   '  "username": "usr887",\n' +
+  │   '  "orderPositions": [\n' +
+  │   '    {\n' +
+  │   '      "productId": 2,\n' +
+  │   '      "price": 30,\n' +
+  │   '      "quantity": 1\n' +
+  │   '    },\n' +
+  │   '    {\n' +
+  │   '      "productId": 3,\n' +
+  │   '      "price": 70,\n' +
+  │   '      "quantity": 1\n' +
+  │   '    }\n' +
+  │   '  ],\n' +
+  │   '  "totalCost": 0.1,\n' +
+  │   '  "createdAt": "2026-03-10T14:19:57.218968979",\n' +
+  │   '  "shopId": 1,\n' +
+  │   '  "status": "NEW",\n' +
+  │   '  "deliveryId": 0\n' +
+  │   '}'
+  └
+  √  Статус 200 OK
+  √  Заказ создан
+
+→ order_create ok DUPE
+  ┌
+  │ '=== REQUEST DATA ==='
+  │ 'URL:', 'http://arch.homework/api/v1/order'
+  │ 'Method:', 'POST'
+  │ 'Headers:', '{\n' +
+  │   '  "accept": "*/*",\n' +
+  │   '  "content-type": "application/json",\n' +
+  │   '  "idempotency-key": "{{idempotencyKey}}"\n' +
+  │   '}'
+  │ 'Body:', {
+  │   mode: 'raw',
+  │   raw: '{\n' +
+  │     '  "username": "{{randomUsername}}",\n' +
+  │     '  "totalCost": 0.1,\n' +
+  │     '  "createdAt": "2026-02-17T12:00:00.000Z",\n' +
+  │     '  "shopId": 1,\n' +
+  │     '  "status": "NEW",\n' +
+  │     '  "orderPositions": [\n' +
+  │     '    {\n' +
+  │     '      "productId": 2,\n' +
+  │     '      "price": 30,\n' +
+  │     '      "quantity": 1\n' +
+  │     '    },\n' +
+  │     '    {\n' +
+  │     '      "productId": 3,\n' +
+  │     '      "price": 70,\n' +
+  │     '      "quantity": 1\n' +
+  │     '    }    \n' +
+  │     '  ]\n' +
+  │     '}',
+  │   options: { raw: { language: 'json' } }
+  │ }
+  │ '\n'
+  └
+  ┌
+  │ 'Прошло 1 секунд, отправляю запрос'
+  └
+  POST http://arch.homework/api/v1/order [200 OK, 542B, 31ms]
+  ┌
+  │ '=== RESPONSE DATA ==='
+  │ 'Status:', 200, 'OK'
+  │ 'Response Time:', 31, 'ms'
+  │ 'Response Headers:', '{\n' +
+  │   '  "date": "Tue, 10 Mar 2026 14:19:58 GMT",\n' +
+  │   '  "content-type": "application/json",\n' +
+  │   '  "transfer-encoding": "chunked",\n' +
+  │   '  "connection": "keep-alive",\n' +
+  │   '  "x-content-type-options": "nosniff",\n' +
+  │   '  "x-xss-protection": "0",\n' +
+  │   '  "cache-control": "no-cache, no-store, max-age=0, must-revalidate",\n' +
+  │   '  "pragma": "no-cache",\n' +
+  │   '  "expires": "0",\n' +
+  │   '  "x-frame-options": "DENY"\n' +
+  │   '}'
+  │ 'Response Body (json):', '{\n' +
+  │   '  "id": 7,\n' +
+  │   '  "username": "usr887",\n' +
+  │   '  "orderPositions": [\n' +
+  │   '    {\n' +
+  │   '      "productId": 2,\n' +
+  │   '      "price": 30,\n' +
+  │   '      "quantity": 1\n' +
+  │   '    },\n' +
+  │   '    {\n' +
+  │   '      "productId": 3,\n' +
+  │   '      "price": 70,\n' +
+  │   '      "quantity": 1\n' +
+  │   '    }\n' +
+  │   '  ],\n' +
+  │   '  "totalCost": 0.1,\n' +
+  │   '  "createdAt": "2026-03-10T14:19:57.218969",\n' +
+  │   '  "shopId": 1,\n' +
+  │   '  "status": "NEW",\n' +
+  │   '  "deliveryId": 0\n' +
+  │   '}'
+  └
+  √  Статус 200 OK
+  √  Новый заказ не создан - Id тот же
+
+→ check balance success
+  ┌
+  │ '=== REQUEST DATA ==='
+  │ 'URL:', 'http://arch.homework/api/v1/billing/account/balance'
+  │ 'Method:', 'GET'
+  │ 'Headers:', '{\n  "accept": "*/*",\n  "x-username": "{{randomUsername}}",\n  "content-typ
+  │ e": "application/json"\n}'
+  │ '\n'
+  └
+  ┌
+  │ 'Прошло 1 секунд, отправляю запрос'
+  └
+  GET http://arch.homework/api/v1/billing/account/balance [200 OK, 355B, 37ms]
+  ┌
+  │ '=== RESPONSE DATA ==='
+  │ 'Status:', 200, 'OK'
+  │ 'Response Time:', 37, 'ms'
+  │ 'Response Headers:', '{\n' +
+  │   '  "date": "Tue, 10 Mar 2026 14:19:59 GMT",\n' +
+  │   '  "content-type": "application/json",\n' +
+  │   '  "transfer-encoding": "chunked",\n' +
+  │   '  "connection": "keep-alive",\n' +
+  │   '  "x-content-type-options": "nosniff",\n' +
+  │   '  "x-xss-protection": "0",\n' +
+  │   '  "cache-control": "no-cache, no-store, max-age=0, must-revalidate",\n' +
+  │   '  "pragma": "no-cache",\n' +
+  │   '  "expires": "0",\n' +
+  │   '  "x-frame-options": "DENY"\n' +
+  │   '}'
+  │ 'Response Body (json):', '{\n  "id": 6,\n  "username": "usr887",\n  "balance": 149.9\n}'
+  │ [39m
+  └
+  √  Статус 200 OK
+  √  Деньги за заказ уплачены один раз
+
+┌─────────────────────────┬───────────────────┬───────────────────┐
+│                         │          executed │            failed │
+├─────────────────────────┼───────────────────┼───────────────────┤
+│              iterations │                 1 │                 0 │
+├─────────────────────────┼───────────────────┼───────────────────┤
+│                requests │                 6 │                 0 │
+├─────────────────────────┼───────────────────┼───────────────────┤
+│            test-scripts │                12 │                 0 │
+├─────────────────────────┼───────────────────┼───────────────────┤
+│      prerequest-scripts │                 8 │                 0 │
+├─────────────────────────┼───────────────────┼───────────────────┤
+│              assertions │                 9 │                 0 │
+├─────────────────────────┴───────────────────┴───────────────────┤
+│ total run duration: 6.9s                                        │
+├─────────────────────────────────────────────────────────────────┤
+│ total data received: 974B (approx)                              │
+├─────────────────────────────────────────────────────────────────┤
+│ average response time: 68ms [min: 20ms, max: 240ms, s.d.: 77ms] │
+└─────────────────────────────────────────────────────────────────┘

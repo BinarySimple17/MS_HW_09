@@ -1,0 +1,17 @@
+nameOverride: ""
+
+fullnameOverride: ""
+
+postgresql:
+  enabled: true
+  fullnameOverride: hw08-postgresql
+  auth:
+    username: otus_db_user
+    database: otus_db
+    existingSecret: postgresql-secret
+    secretKeys:
+      adminPasswordKey: postgres-admin-password
+      userPasswordKey: postgres-password
+secrets:
+  postgresAdminPassword: "your_secure_password_here"
+  postgresPassword: "your_secure_password_here"

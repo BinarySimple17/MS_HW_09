@@ -1,0 +1,76 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.app.name }}
+  labels:
+    # app: {{ .Values.app.name }}
+    {{- include "app.selectorLabels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      # app: {{ .Values.app.name }}
+      {{- include "app.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "app.selectorLabels" . | nindent 8 }}
+    spec:
+      initContainers:
+        - name: wait-for-db
+          image: postgres:15-alpine #
+          # wait for postgres
+          # проверяю применение определенной версии миграции. и не жду job вечно при увеличении реплик
+          # а может это вообще не нужно
+          command:
+            - sh
+            - -c
+            - |
+              echo "Checking PostgreSQL availability..."
+                until pg_isready -h hw08-postgresql -p 5432 -U {{ .Values.postgresql.auth.username }} -d {{ .Values.postgresql.auth.database }} -t 30; do                            
+                echo "PostgreSQL not ready, waiting..."
+                sleep 2
+              done
+              echo "PostgreSQL is ready"
+        
+      #---
+      containers:
+        - name: {{ .Values.app.name }}
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          ports:
+            - containerPort: {{ .Values.service.targetPort }}
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: {{ .Values.profiles | default "kubernetes" }}
+            - name: DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.database.secretName }}
+                  key: {{ .Values.database.passwordKey }}
+            - name: SPRING_CONFIG_ADDITIONAL_LOCATION
+              value: file:/app/config/
+            - name: KAFKA_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: kafka-secret
+                  key: client-passwords              
+          volumeMounts:
+            - name: config-volume
+              mountPath: /app/config
+              readOnly: true
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.liveness.path }}
+              port: {{ .Values.service.targetPort }}
+            initialDelaySeconds: {{ .Values.liveness.delay }}
+            periodSeconds: 10
+            timeoutSeconds: {{ .Values.liveness.timeout }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}            
+      volumes:
+        - name: config-volume
+          configMap:
+            name: {{ .Values.app.name }}-config
+            items:
+              - key: application-kubernetes.yaml
+                path: application-kubernetes.yaml
